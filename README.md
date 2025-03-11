@@ -1,7 +1,11 @@
 # Derafu: L10n CL RUT - Chilean RUT library
 
-[![CI Workflow](https://github.com/derafu/l10n-cl-rut/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/derafu/l10n-cl-rut/actions/workflows/ci.yml?query=branch%3Amain)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![GitHub last commit](https://img.shields.io/github/last-commit/derafu/l10n-cl-rut/main)
+![CI Workflow](https://github.com/derafu/l10n-cl-rut/actions/workflows/ci.yml/badge.svg?branch=main&event=push)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/derafu/l10n-cl-rut)
+![GitHub Issues](https://img.shields.io/github/issues-raw/derafu/l10n-cl-rut)
+![Total Downloads](https://poser.pugx.org/derafu/l10n-cl-rut/downloads)
+![Monthly Downloads](https://poser.pugx.org/derafu/l10n-cl-rut/d/monthly)
 
 A PHP library for working with Chilean RUT and RUN identifiers.
 
