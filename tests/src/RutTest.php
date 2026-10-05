@@ -72,10 +72,10 @@ class RutTest extends TestCase
     public function testValidateValid(): void
     {
         // Should not throw exceptions.
+        $this->expectNotToPerformAssertions();
+
         Rut::validate('12.345.678-5');
         Rut::validate('9.876.543-3');
-
-        $this->assertTrue(true);
     }
 
     /**

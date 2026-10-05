@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Derafu\L10n\Cl\Rut;
 
-use UnexpectedValueException;
+use Derafu\Translation\Exception\Runtime\TranslatableUnexpectedValueException as UnexpectedValueException;
 
 /**
  * Class for working with Chilean RUT and RUN identifiers.
@@ -119,40 +119,40 @@ class Rut
 
         // Validate RUT minimum.
         if ($rut < self::RUT_MIN) {
-            throw new UnexpectedValueException(sprintf(
-                'The RUT cannot be less than %s and the value %s was found.',
-                self::addThousandsSeparator(self::RUT_MIN),
-                self::addThousandsSeparator($rut)
-            ));
+            throw new UnexpectedValueException([
+                'The RUT cannot be less than {minimum} and the value {value} was found.',
+                'minimum' => self::addThousandsSeparator(self::RUT_MIN),
+                'value' => self::addThousandsSeparator($rut),
+            ]);
         }
 
         // Validate RUT maximum.
         if ($rut > self::RUT_MAX) {
-            throw new UnexpectedValueException(sprintf(
-                'The RUT cannot be greater than %s and the value %s was found.',
-                self::addThousandsSeparator(self::RUT_MAX),
-                self::addThousandsSeparator($rut)
-            ));
+            throw new UnexpectedValueException([
+                'The RUT cannot be greater than {maximum} and the value {value} was found.',
+                'maximum' => self::addThousandsSeparator(self::RUT_MAX),
+                'value' => self::addThousandsSeparator($rut),
+            ]);
         }
 
         // Validate that the verification digit is between 0-9 or 'K'.
         if (!preg_match('/^[0-9K]$/', $dv)) {
-            throw new UnexpectedValueException(sprintf(
-                'The verification digit must be a character between "0" and "9", or the uppercase letter "K". The value "%s" was found.',
-                $dv
-            ));
+            throw new UnexpectedValueException([
+                'The verification digit must be a character between "0" and "9", or the uppercase letter "K". The value "{digit}" was found.',
+                'digit' => $dv,
+            ]);
         }
 
         // Validate that the verification digit is correct for the RUT.
         $real_dv = self::calculateDv((int) $rut);
         if ($dv !== $real_dv) {
-            throw new UnexpectedValueException(sprintf(
-                'The verification digit of the RUT %s is incorrect. The value "%s" was found and for the numeric part %s of the RUT, the verification digit should be "%s".',
-                self::formatFull($originalRut),
-                $dv,
-                self::addThousandsSeparator($rut),
-                $real_dv
-            ));
+            throw new UnexpectedValueException([
+                'The verification digit of the RUT {rut} is incorrect. The value "{digit}" was found and for the numeric part {number} of the RUT, the verification digit should be "{expected}".',
+                'rut' => self::formatFull($originalRut),
+                'digit' => $dv,
+                'number' => self::addThousandsSeparator($rut),
+                'expected' => $real_dv,
+            ]);
         }
     }
 
