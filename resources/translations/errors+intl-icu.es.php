@@ -19,4 +19,5 @@ return [
         'El dígito verificador debe ser un carácter entre "0" y "9", o la letra mayúscula "K". Se encontró el valor "{digit}".',
     'The verification digit of the RUT {rut} is incorrect. The value "{digit}" was found and for the numeric part {number} of the RUT, the verification digit should be "{expected}".' =>
         'El dígito verificador del RUT {rut} es incorrecto. Se encontró el valor "{digit}" y para la parte numérica {number} del RUT, el dígito verificador debería ser "{expected}".',
+    'Value must be a string.' => 'El valor debe ser una cadena.',
 ];

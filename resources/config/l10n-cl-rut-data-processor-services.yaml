@@ -1,0 +1,26 @@
+# Optional wiring of the rules of this package for derafu/data-processor. It is
+# apart from l10n-cl-rut-services.yaml because the registrar needs
+# derafu/data-processor, which is not required by this package. Import it from
+# your own services.yaml, after l10n-cl-rut-services.yaml:
+#
+#   imports:
+#       - { resource: '../vendor/derafu/l10n-cl-rut/resources/config/l10n-cl-rut-services.yaml' }
+#       - { resource: '../vendor/derafu/l10n-cl-rut/resources/config/l10n-cl-rut-data-processor-services.yaml' }
+#
+# The processor of derafu/data-processor receives the registrars tagged with
+# `derafu_data_processor.rule_registrar` (see its data-processor-services.yaml),
+# so the rule `rut` can be used in the rules of a field:
+#
+#   'rules' => ['run' => ['validate' => ['rut']]]
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # The tag is explicit because _instanceof does not propagate across imported
+    # files.
+    Derafu\L10n\Cl\Rut\DataProcessor\RutRuleRegistrar:
+        tags: ['derafu_data_processor.rule_registrar']
