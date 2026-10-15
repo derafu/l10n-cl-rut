@@ -30,6 +30,8 @@ final class RutRule implements ValidatorRuleInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @param array<int|string, mixed> $parameters The rule has no parameters.
      */
     public function validate(mixed $value, array $parameters = []): void
     {

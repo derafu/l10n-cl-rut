@@ -42,7 +42,8 @@ class Rut
      * verification digit.
      *
      * @param string $rut Complete RUT, with verification digit (dots and dash optional).
-     * @return array An array with 2 elements: rut (int) and verification digit (string).
+     * @return array{0: int, 1: string} An array with 2 elements: rut (int) and
+     * verification digit (string).
      */
     public static function toArray(string $rut): array
     {
