@@ -156,7 +156,7 @@ final class RutRuleTest extends TestCase
         $this->assertSame('76192083-9', $processor->process('76192083-9', ['validate' => 'required|rut']));
 
         // An empty value is allowed unless the field is required.
-        $this->assertSame('', $processor->process('', ['validate' => ['rut']]));
+        $this->assertNull($processor->process('', ['validate' => ['rut']]));
 
         $this->expectException(ValidationException::class);
         $processor->process('76192083-1', ['validate' => ['rut']]);
