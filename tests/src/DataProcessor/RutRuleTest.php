@@ -12,10 +12,8 @@ declare(strict_types=1);
 
 namespace Derafu\L10n\Cl\TestsRut\DataProcessor;
 
+use Derafu\DataProcessor\Contract\ProcessorInterface;
 use Derafu\DataProcessor\Exception\ValidationException;
-use Derafu\DataProcessor\Processor;
-use Derafu\DataProcessor\ProcessorFactory;
-use Derafu\DataProcessor\Registrar\CompositeRuleRegistrar;
 use Derafu\DataProcessor\RuleRegistry;
 use Derafu\L10n\Cl\Rut\DataProcessor\RutRule;
 use Derafu\L10n\Cl\Rut\DataProcessor\RutRuleRegistrar;
@@ -27,6 +25,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use UnexpectedValueException;
 
 /**
@@ -150,7 +151,16 @@ final class RutRuleTest extends TestCase
 
     public function testTheProcessorValidatesWithTheRule(): void
     {
-        $processor = ProcessorFactory::create(new CompositeRuleRegistrar([new RutRuleRegistrar()]));
+        $root = dirname(__DIR__, 3);
+        $container = new ContainerBuilder();
+        $loader = new YamlFileLoader($container, new FileLocator($root));
+        $loader->load('vendor/derafu/data-processor/resources/config/data-processor-services.yaml');
+        $loader->load('resources/config/l10n-cl-rut-data-processor-services.yaml');
+        $container->getDefinition(ProcessorInterface::class)->setPublic(true);
+        $container->compile();
+
+        $processor = $container->get(ProcessorInterface::class);
+        $this->assertInstanceOf(ProcessorInterface::class, $processor);
 
         $this->assertSame('76192083-9', $processor->process('76192083-9', ['validate' => ['rut']]));
         $this->assertSame('76192083-9', $processor->process('76192083-9', ['validate' => 'required|rut']));
